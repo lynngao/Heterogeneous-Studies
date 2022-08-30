@@ -64,7 +64,7 @@ Use the following command to run the script:<br/>
 
 #### 2. Real data applications
 - [integration_real_data_5trainings.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings.R): Real data application by 6 CRC count datasets. 5 datasets were used as training while the left one was used as test data.<br/>
-- [integration_real_data_5trainings_gx.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings.R): Real data application by 6 TB gene expression datasets. 5 datasets were used as training while the left one was used as test data.<br/>
+- [integration_real_data_5trainings_gx.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings_gx.R): Real data application by 6 TB gene expression datasets. 5 datasets were used as training while the left one was used as test data.<br/>
 Use the following command to run the script:<br/>
 
 ***Rscript integration_real_data_5trainings.R ds1 ds2 ds3 ds4 ds5 ds6 result_directory ml_model***<br/>
