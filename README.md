@@ -6,6 +6,7 @@ The R scripts can be divided into 2 basic components:
 #### 1. Simulation studies
 
 - [integration_scenario1.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario1.R): Simulations for Scenario 1 (Different background distributions of genomic features in populations).<br/>
+
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario1.R alpha lambda sample_size num_related_gene disease_effect ml_model training_background_data1 training_background_data2 test_background_data result_directory***<br/>
@@ -23,6 +24,7 @@ Use the following command to run the script:<br/>
 
 
 - [integration_scenario2_new.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario2_new.R): Simulations for Scenario 2 (Different batch effects in studies with the same background distribution of genomic features in a population).<br/>
+
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario2_new.R alpha lambda train_sample_size test_sample_size num_related_gene disease_effect background_data num_batches batch1_size batch2_size mean_change variance_change ml_model***<br/>
@@ -45,6 +47,7 @@ To change the directory of generated AUC tables, please modify the last few line
 
 
 - [integration_scenario3.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario3.R): Simulations for Scenario 3 (Different disease models in different studies).<br/>
+
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario3.R alpha lambda sample_size num_related_gene number_overlap_gene disease_effect ml_model training_background_data test_background_data result_directory***<br/>
@@ -65,6 +68,7 @@ Use the following command to run the script:<br/>
 #### 2. Real data applications
 - [integration_real_data_5trainings.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings.R): Real data application by 6 CRC count datasets. 5 datasets were used as training while the left one was used as test data.<br/>
 - [integration_real_data_5trainings_gx.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings_gx.R): Real data application by 6 TB gene expression datasets. 5 datasets were used as training while the left one was used as test data.<br/>
+
 Use the following command to run the script:<br/>
 
 ***Rscript integration_real_data_5trainings.R ds1 ds2 ds3 ds4 ds5 ds6 result_directory ml_model***<br/>
