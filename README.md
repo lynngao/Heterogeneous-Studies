@@ -5,7 +5,7 @@ The R scripts can be divided into 2 basic components:
 
 #### 1. Simulation studies
 
-- [integration_scenario1.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario1.R): Simulations for Scenario 1 (Different background distributions of genomic features in populations).
+- [integration_scenario1.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario1.R): Simulations for Scenario 1 (Different background distributions of genomic features in populations).<br/>
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario1.R alpha lambda sample_size num_related_gene disease_effect ml_model training_background_data1 training_background_data2 test_background_data result_directory***<br/>
@@ -22,7 +22,7 @@ Use the following command to run the script:<br/>
 **result_directory:** The directory of the AUC table to be saved.<br/>
 
 
-- [integration_scenario2_new.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario2_new.R): Simulations for Scenario 2 (Different batch effects in studies with the same background distribution of genomic features in a population).
+- [integration_scenario2_new.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario2_new.R): Simulations for Scenario 2 (Different batch effects in studies with the same background distribution of genomic features in a population).<br/>
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario2_new.R alpha lambda train_sample_size test_sample_size num_related_gene disease_effect background_data num_batches batch1_size batch2_size mean_change variance_change ml_model***<br/>
@@ -44,7 +44,7 @@ Use the following command to run the script:<br/>
 To change the directory of generated AUC tables, please modify the last few lines in [integration_scenario2_new.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario2_new.R).
 
 
-- [integration_scenario3.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario3.R): Simulations for Scenario 3 (Different disease models in different studies).
+- [integration_scenario3.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario3.R): Simulations for Scenario 3 (Different disease models in different studies).<br/>
 Use the following command to run the script:<br/>
 
 ***Rscript integration_scenario3.R alpha lambda sample_size num_related_gene number_overlap_gene disease_effect ml_model training_background_data test_background_data result_directory***<br/>
@@ -63,9 +63,12 @@ Use the following command to run the script:<br/>
 - [helper.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/helper.R): helper file contains functions for both simulations and real data applications.
 
 #### 2. Real data applications
-- [LOSO_model_stacking.R](https://github.com/lynngao/CRC_analysis/blob/main/LOSO_model_stacking.R): helper file contains functions for implementing LOSO algorithm.
-- [LOSO_model_stacking_example.R](https://github.com/lynngao/CRC_analysis/blob/main/LOSO_model_stacking_example.R): one example about how to run LOSO model stacking method using the helper file.
+- [integration_real_data_5trainings.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings.R)): Real data application by 6 CRC count datasets. 5 datasets were used as training while the left one was used as test data.<br/>
+- [integration_real_data_5trainings_gx.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_real_data_5trainings.R)): Real data application by 6 TB gene expression datasets. 5 datasets were used as training while the left one was used as test data.<br/>
+Use the following command to run the script:<br/>
 
-For running tasks 1 and 4, microbial species abundance profiles are required. See abundance profiles in [abundance](https://github.com/lynngao/CRC_analysis/tree/main/abundance) as example of the format of required profiles.
+***Rscript integration_real_data_5trainings.R ds1 ds2 ds3 ds4 ds5 ds6 result_directory ml_model***<br/>
 
-For For running tasks 2 and 3, both microbial species abundance profiles and prediction probability files are required. See prediction probability profiles in [pred_prob](https://github.com/lynngao/CRC_analysis/tree/main/pred_prob) as example of the format of required files.
+**ds1 - ds6:** Six count datasets to be used in analysis. We used six CRC count data and six TB gene expression data in our study.
+**result_directory:** The directory of the AUC table to be saved.<br/>
+**ml_model:** Choose between 'rf' or 'logit' for random forests or logistic regression. You can also implement your own ml models in helper.R file.<br/>
