@@ -7,7 +7,9 @@ The R scripts can be divided into 2 basic components:
 
 - [integration_scenario1.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario1.R): Simulations for Scenario 1 (Different background distributions of genomic features in populations).
 Use the following command to run the script:<br/>
+
 ***Rscript integration_scenario1.R alpha lambda sample_size num_related_gene disease_effect ml_model training_background_data1 training_background_data2 test_background_data result_directory***<br/>
+
 **alpha:** Population difference factor between training and test data in the range of 0 and 1. 0 means no population difference while 1 means largest difference.<br/>
 **lambda:** Library size factor. In our study we used a fixed library size of 1 million reads and this factor was a dummy factor. You can adjust the library size based on your need by changing the 'library_size' in the R script as well as manipulate this parameter.<br/>
 **sample_size:** Number of samples you want to simulate. We fixed the sample size of training and test datasets to be the same.<br/>
