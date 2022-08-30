@@ -6,14 +6,14 @@ all(sapply(c("SummarizedExperiment", "plyr", "sva", "MCMCpack", "ROCR", "ggplot2
              "rpart", "genefilter", "nnet", "e1071", "RcppArmadillo", "foreach", "parallel", "doParallel",  
              "ranger", "scales"), require, character.only=TRUE))
 source("/Users/lynngao/Desktop/simulation of heterogenity/helper.R")
-#change to your directory for helper file
+
 command_args <- commandArgs(trailingOnly=TRUE)
-#command_args <- c("/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_yu_filtered.rds", 
-                  #"/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_hannigan_filtered.rds", 
-                  #"/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_feng_filtered.rds", 
-                  #"/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_vogtmann_filtered.rds", 
-                  #"/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_zeller_filtered.rds", 
-                  #"/Users/lynngao/Desktop/abundance_metadata/count_data/centrifuge_count_thomas_filtered.rds", "rf")
+#command_args <- c("/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/A.rds", 
+                  #"/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/C.rds", 
+                  #"/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/D.rds", 
+                  #"/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/E.rds", 
+                  #"/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/F.rds", 
+                  #"/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/G.rds", "rf")
 if(length(command_args)!=8){stop("Not enough input parameters!")} 
 
 
@@ -27,8 +27,7 @@ count_data6 <- readRDS(command_args[6]) #testing
 method = as.character(command_args[8])
 
 get_count_data <- function(count_data){
-  status_data = ifelse(count_data$status == "control", "ctr",count_data$status)
-  status_data[status_data == "CRC"] = "case"
+  status_data = count_data$status
   count_data <- count_data[,-ncol(count_data)]
   top_otu = colnames(count_data)[order(apply(count_data, 2, var), decreasing = TRUE)[1:1000]]
   count_data = count_data[,colnames(count_data)%in%top_otu]
@@ -77,10 +76,10 @@ count_data5 = trim_count_data(union_species, count_data5)
 count_data6 = trim_count_data(union_species, count_data6)
 
 get_rel_abun <- function(ds, status){
-  ds = ds/rowSums(ds) #change to relative abundance
-  min = min(apply(ds[,1:ncol(ds)], 1, function(x) min(x[x>0])))
-  ds[ds == 0] = min*0.65
-  ds = log(ds)
+  #ds = ds/rowSums(ds) #change to relative abundance
+  #min = min(apply(ds[,1:ncol(ds)], 1, function(x) min(x[x>0])))
+  #ds[ds == 0] = min*0.65
+  #ds = log(ds)
   ds$status = status
   return(as.data.frame(ds))
 }
@@ -180,22 +179,22 @@ for (i in 1:30) {
   pred_N_avg_combat <- pred_mat_combat %*% (as.matrix(rbind(nrow(ds1_combat), nrow(ds2_combat), nrow(ds3_combat), nrow(ds4_combat), nrow(ds5_combat))) / (nrow(ds1_combat) + nrow(ds2_combat) + nrow(ds3_combat) + nrow(ds4_combat) + nrow(ds5_combat)))
   
   # CS-Avg: replicability weights
-  cs_zmat <- CS_zmatrix(n_batch=5, training = list(ds1, ds2, ds3, ds4, ds5), perf_name="mxe", method)
+  cs_zmat <- CS_zmatrix(n_batch=5, training = list(ds1, ds2, ds3, ds4, ds5), perf_name="mxe")
   cs_weights_seq <- CS_weight(cs_zmat)
   pred_cs_avg <- pred_mat %*% cs_weights_seq
   
-  cs_zmat_combat <- CS_zmatrix(n_batch=5, training = list(ds1_combat, ds2_combat, ds3_combat, ds4_combat, ds5_combat), perf_name="mxe", method)
+  cs_zmat_combat <- CS_zmatrix(n_batch=5, training = list(ds1_combat, ds2_combat, ds3_combat, ds4_combat, ds5_combat), perf_name="mxe")
   cs_weights_seq_combat <- CS_weight(cs_zmat_combat)
   pred_cs_avg_combat <- pred_mat_combat %*% cs_weights_seq_combat
   
   
   # Reg-a: use each function to predict on one study, bind predictions and do regression
-  reg_ssl_res <- Reg_SSL_pred(n_batch=5, training = list(ds1, ds2, ds3, ds4, ds5), method)
+  reg_ssl_res <- Reg_SSL_pred(n_batch=5, training = list(ds1, ds2, ds3, ds4, ds5))
   reg_a_beta <- Reg_a_weight(coef_mat=do.call(rbind, reg_ssl_res$coef), 
                              n_seq=sapply(list(ds1, ds2, ds3, ds4, ds5), nrow))
   pred_reg_a <- pred_mat %*% reg_a_beta
   
-  reg_ssl_res_combat <- Reg_SSL_pred(n_batch=5, training = list(ds1_combat, ds2_combat, ds3_combat, ds4_combat, ds5_combat), method)
+  reg_ssl_res_combat <- Reg_SSL_pred(n_batch=5, training = list(ds1_combat, ds2_combat, ds3_combat, ds4_combat, ds5_combat))
   reg_a_beta_combat <- Reg_a_weight(coef_mat=do.call(rbind, reg_ssl_res_combat$coef), 
                                     n_seq=sapply(list(ds1_combat, ds2_combat, ds3_combat, ds4_combat, ds5_combat), nrow))
   pred_reg_a_combat <- pred_mat_combat %*% reg_a_beta_combat
@@ -276,5 +275,5 @@ perf_df[32,] = apply(perf_df[1:30,], 2, sd)
 
 ####  Output results
 file_name <- sprintf('integration_auc_5trainings_test_%s_logRelAbun.csv', 
-                     gsub('.', '', sub(".*_count_*(.*?)_filtered.*", "\\1", command_args[6]), fixed=T))
+                     gsub('.', '', sub("/Users/lynngao/Desktop/simulation of heterogenity/TB_gene_expression/", "", sub(".rds","",command_args[6])), fixed=T))
 write.csv(perf_df, paste0(command_args[7],file_name))
