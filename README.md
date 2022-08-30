@@ -5,8 +5,13 @@ The R scripts can be divided into 2 basic components:
 
 #### 1. Simulation studies
 
-- [3classifiers.R](https://github.com/lynngao/CRC_analysis/blob/main/3classifiers.R): helper file contains functions for theses three classifiers.
-- [3classifiers_example.R](https://github.com/lynngao/CRC_analysis/blob/main/3classifiers_example.R): one example about how to run the three classifiers using the helper file.
+- [integration_scenario1.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario1.R): Simulations for Scenario 1 (Different background distributions of genomic features in populations).
+
+- [integration_scenario2_new.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario2_new.R): Simulations for Scenario 2 (Different batch effects in studies with the same background distribution of genomic features in a population).
+
+- [integration_scenario3.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/integration_scenario3.R): Simulations for Scenario 3 (Different disease models in different studies).
+
+- [helper.R](https://github.com/lynngao/Heterogeneous-Studies/blob/main/helper.R): helper file contains functions for both simulations and real data applications.
 
 #### 2. Real data applications
 - [LOSO_model_stacking.R](https://github.com/lynngao/CRC_analysis/blob/main/LOSO_model_stacking.R): helper file contains functions for implementing LOSO algorithm.
