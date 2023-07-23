@@ -1,4 +1,4 @@
-# Batch Normalization Followed by Merging Is Powerful for Phenotype Prediction Integrating Multiple Heterogeneous Studies
+# Batch Normalization Followed by Merging is Powerful for Phenotype Prediction Integrating Multiple Heterogeneous Studies
 
 This repository contains R scripts for running the analysis described in our manuscript. 
 The R scripts can be divided into 2 basic components:
